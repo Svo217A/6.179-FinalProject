@@ -21,6 +21,7 @@ public:
     std::vector<std::string> body = {"head", "torso", "right arm", "left arm", "right leg",
         "left leg"};
     bool removeBodyPart();
+    void redrawBody(); 
 };
 
 class WordBank
@@ -32,7 +33,6 @@ class WordBank
         "ozone", "pendulum", "practical", "quadrilateral", "query", "ratatouille", "reabsorb",
         "simple", "syllabus", "taciturn", "traumatic", "umbrella", "unique", "vacation", "vigorous",
         "winner", "wonderful", "xerox", "xylography", "zealotry", "zucchini"};
-    std::vector<char> lettersGuessed;
 public:
     std::string pickWord();
 };
@@ -52,6 +52,10 @@ bool HangMan::removeBodyPart()
     return true;
 }
 
+void HangMan::redrawBody() 
+{
+    this->body = {"head", "torso", "right arm", "left arm", "right leg", "left leg"}; 
+}
 //WordBank methods
 std::string WordBank::pickWord()
 {
@@ -126,13 +130,15 @@ int main()
     WordBank wb;
     std::string word = wb.pickWord();
     std::string dword;
-    for (int i = 0; i < word.length(); i++)
+    /*for (int i = 0; i < word.length(); i++)
     {
         dword += "-";
     }
+*/
     //Variables
     char guess; //The character the user guesses
     std::vector<char> guessedL;
+    int score = 0; 
     
     //Instructions printed out to the user:
     std::cout << "Welcome to Hangman!\nHere are the rules of the game: \n";
@@ -143,18 +149,28 @@ int main()
     std::cout << "***will let you know and will also print out what letters have already been guessed.\n";
     std::cout << "Please enjoy!!!\n";
     
-    while(hm.body.size() != 0 && !(word==dword))
+while(hm.body.size() != 0) 
+{
+    word = wb.pickWord(); //generate a word the user is guessing for 
+    //for loop to generate dword 
+    dword = ""; 
+    for (int a = 0; a < word.length(); a++)
     {
-        std::cout<<"Here is your current guessed word: "<<dword<<std:: endl;
+	dword += "-"; 
+    }
+    std::cout << "\nProblem " << score + 1 << ":\n"; 
+    while(!(word==dword) && hm.body.size() != 0)
+    {
+        std::cout<<"Here is the current word: "<<dword<<std:: endl;
         std::cout<<"This are the letters you have guessed"<<std:: endl;
-        for (int i = 0; i<guessedL.size(); i++) {
+        for (int i = 0; i < guessedL.size(); i++) {
             std::cout<<guessedL.at(i)<< " ";
         }
 
         std::cout<< std:: endl;
         std::cout<< "Body parts left:"<<std:: endl;
 
-        for (int i = 0; i<hm.body.size(); i++) {
+        for (int i = 0; i < hm.body.size(); i++) {
             std::cout<<hm.body.at(i)<< "\n";
         }
 
@@ -178,13 +194,20 @@ int main()
             }
         }
     }
-    if (word==dword) {
+    if (word==dword) 
+    {
         std:: cout<<"Yay! You won!"<<std:: endl;
+	score++; 
+	hm.redrawBody(); 
+	guessedL.clear(); 
     }
-    else {
+    else 
+    {
         std::cout<<"This is the word: "<<word<<std:: endl;
+	std::cout << "Your final score is: " << score << "!\n"; 
     }
+}
     std::cout << "\nCREDITS: \n"; 
-    std::cout << "Created by Arnav Patel and Summer Vo for 6.179\n"; 
-    std::cout << "Project efforts began 1/27/2018\n"; 
+    std::cout << "***Created by Arnav Patel and Summer Vo for 6.179\n"; 
+    std::cout << "***Project efforts began 1/27/2018\n"; 
 }
