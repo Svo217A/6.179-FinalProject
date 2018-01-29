@@ -71,7 +71,7 @@ bool isLetter(char c)
     }
     else
     {
-        std::cout << "Please input a letter.\n";
+        std::cout << "***Please input a letter.***\n";
         return false;
     }
     
@@ -92,27 +92,32 @@ bool wasGuessed(std::vector<char> v, char c)
     }
     if (b)
     {
-        std::cout << "This letter was already guessed. Please try again\n";
+        std::cout << "***This letter was already guessed. Please try again***\n";
     }
     return b;
 }
 
 //Method4: Checks if Letter is in Word
-std::vector<int> isLetterinWord (std::string word, char letter) {
+std::vector<int> isLetterinWord (std::string word, char letter) 
+{
     std:: vector <int> indices;
-    for (int i=0; i<word.length();i++) {
-        if(letter==word.at(i)) {
+    for (int i=0; i<word.length();i++) 
+    {
+        if(letter==word.at(i)) 
+	{
             indices.push_back(i);
         }
     }
     return indices;
 }
-//Method5: Replace underscores with letter
-std:: string replaceLetters (std:: string underscored_word, std:: vector<int> indices, char letter) {
-    for (auto number:indices) {
-        underscored_word[number] = letter;
+//Method5: Replace dashed with letter
+std:: string replaceLetters (std:: string dashed_word, std:: vector<int> indices, char letter) 
+{
+    for (auto number:indices) 
+    {
+        dashed_word[number] = letter;
     }
-    return underscored_word;
+    return dashed_word;
 }
 
 int main()
@@ -136,7 +141,7 @@ int main()
     std::cout << "***The program will print out the word replaced with dashes; each dash represents a character\n";
     std::cout << "***Guess one letter at a time when prompted and the program\n";
     std::cout << "***will let you know and will also print out what letters have already been guessed.\n";
-    std::cout << "***Please enjoy!!!\n";
+    std::cout << "Please enjoy!!!\n";
     
     while(hm.body.size() != 0 && !(word==dword))
     {
@@ -145,23 +150,29 @@ int main()
         for (int i = 0; i<guessedL.size(); i++) {
             std::cout<<guessedL.at(i)<< " ";
         }
+
         std::cout<< std:: endl;
         std::cout<< "Body parts left:"<<std:: endl;
+
         for (int i = 0; i<hm.body.size(); i++) {
-            std::cout<<hm.body.at(i)<< " ";
+            std::cout<<hm.body.at(i)<< "\n";
         }
+
         std::cout<<std::endl;
         std::cout << "Enter your guess: \n";
         std::cin >> guess;
+
         if (isLetter(guess) && !wasGuessed(guessedL, guess))
         {
             std:: vector <int> indices;
             indices = isLetterinWord(word,guess);
-            if (indices.size() == 0) {
+            if (indices.size() == 0) 
+	    {
                 bool a = hm.removeBodyPart();
                 guessedL.push_back(guess);
             }
-            else {
+            else 
+	    {
                 dword = replaceLetters(dword, indices, guess);
                 guessedL.push_back(guess);
             }
@@ -173,4 +184,7 @@ int main()
     else {
         std::cout<<"This is the word: "<<word<<std:: endl;
     }
+    std::cout << "\nCREDITS: \n"; 
+    std::cout << "Created by Arnav Patel and Summer Vo for 6.179\n"; 
+    std::cout << "Project efforts began 1/27/2018\n"; 
 }
