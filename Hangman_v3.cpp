@@ -1,6 +1,6 @@
 
 //
-//  Final Project-v2.cpp
+//  Hangman_v3.cpp
 //
 //
 //  Created and editted by Arnav Patel and Summer Vo 1/28/18.
